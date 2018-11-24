@@ -5,11 +5,19 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { DocListComponent } from './doc-list/doc-list.component';
 import { AddDocComponent } from './add-doc/add-doc.component';
+import { FileDropModule } from 'ngx-file-drop';
 
 @NgModule({
-  declarations: [LayoutComponent, HeaderComponent, FooterComponent, DocListComponent, AddDocComponent],
+  declarations: [
+    LayoutComponent,
+    HeaderComponent,
+    FooterComponent, 
+    DocListComponent,
+    AddDocComponent
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+    FileDropModule
   ],
   exports: [LayoutComponent]
 })

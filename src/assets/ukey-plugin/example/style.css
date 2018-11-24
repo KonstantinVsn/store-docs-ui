@@ -1,0 +1,258 @@
+body {
+    padding: 0;
+    margin: 0;
+    min-width: 800px;
+}
+
+.ukey-example-body {
+    font: 300 14px Arial;
+    color: #222;
+    margin: 0;
+    height: 100%;
+}
+
+.ukey-example-wrapper {
+    box-shadow: 2px 2px 8px #ccc;
+    width: 750px;
+    margin: 20px auto;
+}
+
+.header {
+    padding: 25px;
+    background: #2196F3;
+}
+
+.header .logo {
+    display: block;
+    text-align: center;
+}
+
+.header h3 {
+    color: #fff;
+    margin: 15px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.header .logo img {
+    width: 150px;
+}
+
+.ukey-example-sign-form {
+    background: #ffffff;
+    padding: 15px 25px 45px;
+}
+
+.ukey-example-wrapper-item {
+    padding: 10px;
+    margin: 10px 0px 10px 0px;
+}
+
+input[type="text"].ukey-example-wrapper-item {
+    width: 100%;
+}
+
+input[type="submit"].ukey-example-wrapper-item {
+    float: right;
+    width: 200px;
+}
+
+span[name="error-message"] {
+    color: red;
+    margin-left: 5px;
+}
+
+/* form starting stylings ------------------------------- */
+.ukey-example-group {
+    position: relative;
+	margin: 25px 0px 10px 0px;
+	min-height: 15px;
+}
+
+.ukey-example-group.buffer-group {
+    width: 565px;
+    display: inline-block;
+}
+
+.ukey-example-group.buffer-encoding-group {
+	width: 565px;
+	display: inline-block;
+	margin-top: 10px;
+}
+
+.ukey-example-group.buffer-encoding-group label{
+	position: relative;
+	display: block;
+	left: 0;
+	top: 0;
+}
+
+.ukey-example-group.buffer-encoding-group select{
+	margin-top: 10px;
+	min-width: 200px;
+	height: 35px;
+}
+
+.ukey-example-group.signature-group {
+    margin-top: 30px;
+}
+
+.ukey-example-group > input, .ukey-example-group > textarea {
+    font-size: 16px;
+    padding: 10px;
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
+
+.ukey-example-group > textarea {
+    padding: 0px 10px 10px 10px;
+}
+
+.ukey-example-group > textarea {
+    height: 400px;
+    resize: none;
+}
+
+.ukey-example-group > input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset;
+}
+
+.ukey-example-group > input:focus, .ukey-example-group > textarea:focus {
+    outline: none;
+}
+
+#ukey-example-certificate-details{
+	padding: 10px 0 15px 10px;
+	position: relative;
+}
+#ukey-example-certificate-details>div{
+	line-height: 1.5;
+}
+
+/* LABEL ======================================= */
+label {
+    color: #999;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 15px;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+    font: 400 18px Arial;
+}
+
+/* active state */
+.ukey-example-group > input:focus ~ label,
+.ukey-example-group > input.valid ~ label,
+.ukey-example-group > textarea ~ label,
+.ukey-example-group.certificate-group > label {
+    top: -15px;
+    font-size: 14px;
+    color: #2196F3;
+}
+
+.ukey-example-group > textarea ~ label {
+    top: -30px;
+}
+
+/* BOTTOM BARS ================================= */
+.ukey-example-bar {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.ukey-example-bar:before, .ukey-example-bar:after {
+    content: "";
+    height: 2px;
+    width: 0;
+    bottom: 0;
+    position: absolute;
+    background: #2196F3;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+}
+
+.ukey-example-bar:before {
+    left: 50%;
+}
+
+.ukey-example-bar:after {
+    right: 50%;
+}
+
+/* active state */
+.ukey-example-group > input:focus ~ .ukey-example-bar:before,
+.ukey-example-group > input:focus ~ .ukey-example-bar:after,
+.ukey-example-group > input.valid ~ .ukey-example-bar:after,
+.ukey-example-group > input.valid ~ .ukey-example-bar:before {
+    width: 50%;
+}
+
+.ukey-example-group > textarea ~ .ukey-example-bar:after,
+.ukey-example-group > textarea ~ .ukey-example-bar:before {
+    width: 50%;
+}
+
+/* Button */
+.ukey-example-submit-btn {
+    border-width: 0;
+    outline: none;
+    border-radius: 2px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, .3);
+    background-color: #2196F3;
+    color: #ffffff;
+    transition: background-color .3s;
+    height: 48px;
+    font-size: 15px;
+    padding: 5px 20px 5px 20px;
+    cursor: pointer;
+    float: right;
+    display: inline-block;
+	margin-top: 15px;
+}
+
+.ukey-example-submit-btn:hover, .ukey-example-submit-btn:focus {
+    background-color: #0d8bf2;
+}
+
+.ukey-example-submit-btn > * {
+    position: relative;
+}
+
+.ukey-example-submit-btn span {
+    display: block;
+    padding: 12px 24px;
+}
+
+.ukey-example-submit-btn :before {
+    content: "";
+
+    top: 50%;
+    left: 50%;
+
+    display: block;
+    width: 0;
+    padding-top: 0;
+
+    border-radius: 100%;
+
+    background-color: rgba(236, 240, 241, .3);
+
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.ukey-example-submit-btn :active:before {
+    width: 120%;
+    padding-top: 120%;
+
+    transition: width .2s ease-out, padding-top .2s ease-out;
+}

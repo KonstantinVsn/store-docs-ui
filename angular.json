@@ -27,9 +27,15 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/assets/ukey-plugin/css/ukey-plugin-font.css",
+              "src/assets/ukey-plugin/css/ukey-plugin-loader.css",
+              "src/assets/ukey-plugin/css/ukey-plugin-window.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/ukey-plugin/js/constants.js",
+              "src/assets/ukey-plugin/js/plugin.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -85,7 +91,9 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [],
+            "scripts": [
+
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -137,3 +145,5 @@
   },
   "defaultProject": "storeDocsUI"
 }
+
+ 

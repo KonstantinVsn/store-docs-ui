@@ -1,0 +1,133 @@
+<html>
+
+<head>
+  <title>Plugin Test</title>
+  <meta charset="utf-8">
+  <!-- STYLES -->
+
+  <!-- JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+<div>
+  <input id="file_input" type="file" multiple/>
+  <button onclick="createFileRequest()">
+    Create file request
+  </button>
+</div>
+<div>
+  <input id="buffer_input" type="text">
+  <button onclick="createBufferRequest()">
+    Create buffer request
+  </button>
+</div>
+</body>
+
+<script>
+  var _TOKEN = "w5n77v3GRLGq6RJMybpVeaPv6V7sogG3";
+  //var _URL = "http://10.10.10.136:3020/api/v1/requests";
+  var _URL = "https://test.ukey.net.ua:3020/api/v1/requests";
+
+
+  function createFileRequest() {
+    var data = new FormData();
+    var files = [...$('#file_input')[0].files] ;
+    console.log(files);
+    var payload = [];
+    files.forEach(file => {
+      payload.push({
+            "name": file.name,
+            "size": file.size
+          });
+      data.append(file.name, file);
+    });
+
+
+    var obj = {
+      "filePayload": {
+        "payload": payload
+      },
+      "status": "PENDING",
+      "timeoutPeriod": 1000000,
+      "requestInitiator": {
+        "initType": "WEB",
+        "name": "Requests V1 test",
+        "description": "Test file request",
+        "identifier": "some.test.id.file"
+      }
+    };
+
+    data.append('request_model', JSON.stringify(obj));
+
+    jQuery.ajax({
+      url: _URL + "/file",
+      type: 'POST',
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: data,
+      headers: {
+        "Authorization": "Bearer " + _TOKEN
+      },
+      crossDomain: true,
+      xhrFields: {
+        withCredentials: true
+      },
+      success: function (data) {
+        var response = JSON.stringify(data);
+        console.log(response);
+        alert(response);
+      }
+    });
+  }
+
+  function createBufferRequest() {
+    var buffer = $('#buffer_input')[0].value;
+    var requestModel = JSON.stringify({
+      bufferPayload: {
+          payload: [
+            {
+              buffer: buffer
+            }
+          ],
+          encoding: "RAW"
+      },
+      status: 'PENDING',
+      timeoutPeriod: 1000000,
+      key: "548618421630d8204fbb73b9b506d3cb4dc9810a16249d14c83fa5209f47e3ccc00590d7f20cc535ba6490057405ccb4",
+      requestInitiator: {
+        initType: "WEB",
+        name: "Requests V1 test",
+        description: "Test buffer request",
+        identifier: "some.test.id.buffer"
+      }
+    });
+
+    jQuery.ajax({
+      url: _URL + "/buffer",
+      type: 'POST',
+      data: requestModel,
+      contentType: 'application/json',
+      headers: {
+        "Authorization": "Bearer " + _TOKEN
+      },
+      crossDomain: true,
+      xhrFields: {
+        withCredentials: true
+      },
+      success: function (data) {
+        var response = JSON.stringify(data);
+        console.log(response);
+        alert(response);
+      },
+      error: function (error) {
+        var response = JSON.stringify(errro);
+        console.log(response);
+        alert(response);
+      },
+    });
+  }
+</script>
+
+</html>

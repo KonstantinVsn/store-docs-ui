@@ -1,0 +1,203 @@
+<html>
+
+<head>
+  <title>Plugin Test</title>
+  <meta charset="utf-8">
+  <!-- STYLES -->
+
+  <!-- JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+<div>
+  <input id="file_input" type="file"/>
+  <button onclick="createFileRequest()">
+    Create file request
+  </button>
+  <input id="file_sign_input" type="file"/>
+  <button onclick="signFileRequest()">
+    Sign buffer request
+  </button>
+</div>
+<div>
+  <input id="buffer_input" type="text">
+  <button onclick="createBufferRequest()">
+    Create buffer request
+  </button>
+  <button onclick="signBufferRequest()">
+    Sign buffer request
+  </button>
+</div>
+</body>
+
+<script>
+  var bufferRequest = {};
+  var fileRequest = {};
+  var keyId = "3b42a7ce-47b0-4c53-a096-0d0c777c37be";
+  var certificateSerialNumber = "A111111A";
+  function createFileRequest() {
+    var data = new FormData();
+    var file = $('#file_input')[0].files[0];
+    data.append(file.name, file);
+
+    var obj = {
+      "filePayload": {
+        "payload": [{
+          "name": file.name,
+          "size": file.size
+        }]
+      },
+      "status": "PENDING",
+      "timeoutPeriod": 1000000,
+      "requestInitiator": {
+        "initType": "WEB",
+        "name": "name",
+        "description": "",
+        "identifier": ""
+      }
+    };
+
+    data.append('request_model', JSON.stringify(obj));
+
+    jQuery.ajax({
+      url: 'http://localhost:3020/api/v1/requests/file',
+      type: 'POST',
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: data,
+      headers: {
+        "Authorization": "Bearer FWwtboDENMhsua8IpMAFpw4ybtWcdeh5"
+      },
+      crossDomain: true,
+      xhrFields: {
+        withCredentials: true
+      },
+      success: function (data) {
+        fileRequest = data;
+      }
+    });
+  }
+
+  function createBufferRequest() {
+    var buffer = $('#buffer_input')[0].value;
+    var requestModel = JSON.stringify({
+      bufferPayload: {
+        payload: [{
+          buffer: buffer,
+          id: 1
+        }],
+        encoding: "RAW"
+      },
+      status: 'PENDING',
+      timeoutPeriod: 1000000,
+      key: "548618421630d8204fbb73b9b506d3cb4dc9810a16249d14c83fa5209f47e3ccc00590d7f20cc535ba6490057405ccb4",
+      signInitiator: {
+        initType: "WEB",
+        name: "Test",
+        description: "Test",
+        identifier: "Test"
+      }
+    });
+
+    jQuery.ajax({
+      url: 'http://localhost:3020/api/v1/requests/buffer',
+      type: 'POST',
+      data: requestModel,
+      contentType: 'application/json',
+      headers: {
+        "Authorization": "Bearer FWwtboDENMhsua8IpMAFpw4ybtWcdeh5"
+      },
+      crossDomain: true,
+      xhrFields: {
+        withCredentials: true
+      },
+      success: function (response) {
+        bufferRequest = response;
+      },
+      error: function (error) {
+        alert(error);
+      },
+    });
+  }
+
+  function signBufferRequest() {
+    var signatureObject = {
+      keyDetails: {
+        keyId: keyId,
+        certificateSerialNumber: certificateSerialNumber
+      },
+      bufferSignatures: {
+        bufferPayload: bufferRequest.bufferPayload,
+        signatures: [{
+          bufferId: 1,
+          signature: "adsasddasdasadsadsasdasdasd"
+        }]
+      },
+      requestId: bufferRequest.requestId
+    };
+
+    jQuery.ajax({
+      url: 'http://localhost:3020/api/v1/signatures/buffer',
+      type: 'POST',
+      data: JSON.stringify(signatureObject),
+      contentType: 'application/json', headers: {
+        "Authorization": "Bearer FWwtboDENMhsua8IpMAFpw4ybtWcdeh5"
+      },
+      crossDomain: true,
+      xhrFields: {
+        withCredentials: true
+      },
+      success: function (response) {
+        console.log(response);
+      },
+      error: function (error) {
+        console.log(error);
+      },
+    });
+  };
+
+  function signFileRequest() {
+    var data = new FormData();
+    var file = $('#file_sign_input')[0].files[0];
+    data.append("1", file);
+
+    var signatureObject = {
+      keyDetails: {
+        keyId: keyId,
+        certificateSerialNumber: certificateSerialNumber
+      },
+      fileSignatures: {
+        filePayload: fileRequest.filePayload,
+        signatures: [{
+          fileId: "1"
+        }]
+      },
+      requestId: fileRequest.requestId
+    };
+
+    data.append('signature_model', JSON.stringify(signatureObject));
+
+    jQuery.ajax({
+      url: 'http://localhost:3020/api/v1/signatures/file',
+      type: 'POST',
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: data,
+      headers: {
+        "Authorization": "Bearer FWwtboDENMhsua8IpMAFpw4ybtWcdeh5"
+      },
+      crossDomain: true,
+      xhrFields: {
+        withCredentials: true
+      },
+      success: function (data) {
+        alert(data);
+      }
+    });
+  };
+</script>
+
+</html>

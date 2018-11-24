@@ -1,0 +1,310 @@
+::after,
+::before {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.ukey-plugin-window {
+	position: absolute;
+	z-index: 16777271;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	font-family: sans-serif;
+	display: none;
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.ukey-plugin-window-content {
+	background-color: #2196F3;
+	margin: 30px auto;
+	padding: 20px;
+	width: 400px;
+}
+
+    .ukey-plugin-window-content .ukey-plugin-window-header {
+        padding-bottom: 30px;
+        text-align: center;
+        display: block;
+        margin: 0;
+    }
+
+.ukey-logo {
+    width: 125px;
+    height: 125px;
+    margin: 0 auto 10px;
+    content: url(../img/ukey-icon-lite.png);
+}
+
+.ukey-font {
+    font: 30px 'Comfortaa Regular';
+    color: #ffffff;
+}
+
+.ukey-plugin-font-info {
+    font: 13px 'Comfortaa Regular';
+    color: #ffffff;
+}
+
+.ukey-plugin-window-content .ukey-plugin-window-body {
+    padding: 20px;
+}
+
+.ukey-plugin-processing {
+    padding-top: 45px;
+}
+
+.ukey-plugin-processing-message {
+    padding-top: 20px;
+    text-align: center;
+    color: #ffffff;
+}
+
+
+/*USER INFO*/
+
+.ukey-user-wrapper {
+    text-align: center;
+}
+
+.ukey-user-item {
+    display: flex;
+    padding: 10px 40px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: background 0.2s;
+    margin-bottom: 15px;
+    margin-top: 30px;
+}
+
+.ukey-login-item {
+	display: flex;
+	padding: 10px 10px;
+	cursor: pointer;
+	background-color: rgba(255, 255, 255, 0.1);
+	transition: background 0.2s;
+}
+
+
+    .ukey-user-item:hover, .ukey-login-item:hover {
+        background-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .ukey-user-item .ukey-user-avatar {
+        display: inline-block;
+        margin-right: 10px;
+        vertical-align: middle;
+    }
+
+        .ukey-user-item .ukey-user-avatar img {
+            top: 0;
+            left: 0;
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+        }
+
+    .ukey-user-item .ukey-user-info {
+        display: inline-block;
+        vertical-align: middle;
+        padding: 10px;
+        color: #ffffff;
+        font-size: 14px;
+        text-align: left;
+    }
+
+        .ukey-user-item .ukey-user-info > span {
+            display: block;
+        }
+
+        .ukey-user-item .ukey-user-info .user-name {
+            font-weight: 700;
+        }
+
+.ukey-change-user {
+    text-align: center;
+    padding-top: 20px;
+}
+
+    .ukey-change-user > a {
+        font-size: 13px;
+        color: #ffffff;
+        cursor: pointer;
+    }
+
+.ukey-plugin-error-message {
+    color: #ff1a1a;
+    padding-top: 15px;
+    padding-left: 5px;
+    font-size: 14px;
+}
+
+.ukey-logintype-img-login {
+	width: 80px;
+	height: 80px;
+	margin: 0 auto 10px;
+	content: url(../img/ic_login.png);
+}
+
+.ukey-logintype-img-mobile {
+	width: 80px;
+	height: 80px;
+	margin: 0 auto 10px;
+	content: url(../img/ic_notification.png);
+}
+
+.ukey-plugin-login{
+	background-color: #ffffff;
+	border-radius: 3px;
+	padding: 22px 8px 8px 8px;
+}
+
+.ukey-plugin-icon{
+	background-size: 25px !important;
+	float: left;
+	width: 25px;
+	height: 25px;
+	margin: 27px 0 0 13px;
+}
+
+.ukey-plugin-mail-icon{
+	background: url(../img/email-outline.svg);
+}
+
+.ukey-plugin-login-group{
+	position: relative;
+	padding: 30px 20px 15px 50px;
+}
+
+.ukey-plugin-login-group input{
+	font-size: 16px;
+	display: block;
+	border: none;
+	width: 100%;
+	border-bottom: 1px solid #757575;
+}
+
+.ukey-plugin-login-group input:-webkit-autofill{
+	-webkit-box-shadow: 0 0 0 30px #ffffff inset;
+}
+
+.ukey-plugin-login-group input:focus{
+	outline: none;
+	border-color: #2196F3
+}
+
+/* LABEL ======================================= */
+.ukey-plugin-login-group label{
+	color: #999;
+	font-size: 14px;
+	font-weight: normal;
+	padding: 5px 0 0 50px;
+	position: absolute;
+	pointer-events: none;
+	left: 0;
+	top: 21px;
+	transition: 0.2s ease all;
+	-moz-transition: 0.2s ease all;
+	-webkit-transition: 0.2s ease all;
+}
+
+/* active state */
+.ukey-plugin-login-group input:focus ~ label, .ukey-plugin-login-group input:valid ~ label{
+	top: 0;
+	font-size: 12px;
+	color: #2196F3;
+}
+
+/* BOTTOM BARS ================================= */
+.bar{
+	position: relative;
+	display: block;
+	width: 300px;
+}
+
+.bar:before, .bar:after{
+	content: '';
+	height: 2px;
+	width: 0;
+	bottom: 1px;
+	position: absolute;
+	background: transparent;
+	transition: 0.2s ease all;
+	-moz-transition: 0.2s ease all;
+	-webkit-transition: 0.2s ease all;
+}
+
+.bar:before{
+	left: 50%;
+}
+
+.bar:after{
+	right: 50%;
+}
+
+/* active state */
+.ukey-plugin-login-group input:focus ~ .bar:before, .ukey-plugin-login-group input:focus ~ .bar:after{
+	width: 50%;
+}
+
+/*SUBMIT BUTTON*/
+.ukey-plugin-submit-btn{
+	position: relative;
+	display: block;
+	margin: 25px auto;
+	overflow: hidden;
+	border-width: 0;
+	outline: none;
+	border-radius: 2px;
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, .3);
+	background-color: #2196F3;
+	color: #ecf0f1;
+	transition: background-color .3s;
+	width: 92%;
+	height: 48px;
+	font-size: 18px;
+	padding: 0;
+	cursor: pointer;
+}
+
+.ukey-plugin-submit-btn:hover, .ukey-plugin-submit-btn:focus{
+	background-color: #0d8bf2;
+}
+
+.ukey-plugin-submit-btn > *{
+	position: relative;
+}
+
+.ukey-plugin-submit-btn span{
+	display: block;
+	padding: 12px 24px;
+}
+
+.ukey-plugin-submit-btn :before{
+	content: "";
+
+	top: 50%;
+	left: 50%;
+
+	display: block;
+	width: 0;
+	padding-top: 0;
+
+	border-radius: 100%;
+
+	background-color: rgba(236, 240, 241, .3);
+
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+.ukey-plugin-submit-btn :active:before{
+	width: 120%;
+	padding-top: 120%;
+
+	transition: width .2s ease-out, padding-top .2s ease-out;
+}

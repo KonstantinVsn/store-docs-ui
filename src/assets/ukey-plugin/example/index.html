@@ -1,0 +1,155 @@
+<html>
+<head>
+  <title>Plugin Example</title>
+  <meta charset="utf-8">
+  <!-- STYLES -->
+  <link rel="stylesheet" href="https://test.ukey.net.ua:3020/plugin/css/ukey-plugin-font.css" type="text/css"/>
+  <link rel="stylesheet" href="https://test.ukey.net.ua:3020/plugin/css/ukey-plugin-loader.css" type="text/css"/>
+  <link rel="stylesheet" href="https://test.ukey.net.ua:3020/plugin/css/ukey-plugin-window.css" type="text/css"/>
+  <link rel="stylesheet" href="style.css" type="text/css"/>
+
+  <!-- JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://test.ukey.net.ua:3020/plugin/js/constants.js" type="text/javascript"></script>
+  <script src="https://test.ukey.net.ua:3020/plugin/js/plugin.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="ukey-example-body">
+  <div class="ukey-example-wrapper">
+    <div class="ukey-example-content">
+      <div class="header">
+        <a href="http://ukey.net.ua" class="logo" target="_blank">
+          <img src="https://test.ukey.net.ua:3020/modules/core/client/img/brand/ukey-icon.png" alt="">
+        </a>
+        <h3>UKey</h3>
+      </div>
+
+      <form id="ukey-example-sign-form" class="ukey-example-sign-form" action="javascript: authenticateWithSign()">
+        <div>
+          <input type="submit" class="ukey-example-submit-btn" value="Підписати"/>
+          <div class="ukey-example-group buffer-group">
+            <input id="ukey-example-buffer" type="text" autocomplete="off" onchange="validateBufferInput()">
+            <span class="ukey-example-bar"></span>
+            <label>Текст для підпису</label>
+          </div>
+          <div class="ukey-example-group buffer-encoding-group">
+            <label>Кодування буфера</label>
+            <select id="ukey-example-buffer-encoding">
+              <option value="RAW">Без кодування</option>
+              <option value="BASE64">Base64</option>
+              <option value="HEX">HEX</option>
+            </select>
+          </div>
+        </div>
+        <span id="signing-message" name="error-message"></span>
+        <div id="ukey-example-certificate-group" class="ukey-example-group certificate-group" hidden>
+          <label>Сертифікат</label>
+          <div id="ukey-example-certificate-details"></div>
+        </div>
+        <div id="ukey-example-signature-group" class="ukey-example-group signature-group" hidden>
+          <textarea id="ukey-example-signature" readonly></textarea>
+          <span class="ukey-example-bar"></span>
+          <label>Підпис</label>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+<script>
+  var signatureTextArea = $("#ukey-example-signature"),
+    signatureGroup = $("#ukey-example-signature-group"),
+    certificateGroup = $("#ukey-example-certificate-group"),
+    certificateDetails = $("#ukey-example-certificate-details"),
+    bufferInput = $("#ukey-example-buffer"),
+    signingMessageSpan = $("#signing-message"),
+    bufferEncodingSelector = $("#ukey-example-buffer-encoding");
+
+  var validateBufferInput = function () {
+    var buffer = bufferInput.val().trim();
+    if (!buffer) {
+      bufferInput.val("");
+      bufferInput.removeClass("valid");
+      signingMessageSpan.text("Текст для підпису не може бути пустий");
+    } else {
+      bufferInput.addClass("valid");
+      signingMessageSpan.text("");
+    }
+  };
+
+  $(function () {
+    var input = $("#ukey-example-buffer")[0];
+    input.addEventListener('invalid', function (e) {
+      if (input.validity.valueMissing) {
+        e.target.setCustomValidity("");
+      }
+    }, false);
+  });
+
+  var authenticateWithSign = function () {
+    var buffer = bufferInput.val().trim();
+    if (buffer) {
+      signatureTextArea.val("");
+      signingMessageSpan.text("");
+      signatureGroup.hide();
+
+      var defaultConfiguration = {
+        // targetUrl: "https://test.ukey.net.ua:3020",
+        targetUrl: "http://localhost:3020",
+        name: 'Test',
+        identifier: 'Test',
+        portalId: '1851da23-e2a8-4a3e-baa9-7cceed979fat',
+        portalKey: '548618421630d8204fbb73b9b506d3cb4dc9810a16249d14c83fa5209f47e3ccc00590d7f20cc535ba6490057405ccb4'
+      };
+
+      var data = {
+        Buffer: buffer,
+        BufferEncoding: bufferEncodingSelector.val(),
+        Description: 'Test using plugin'
+      };
+
+      var showCertificate = function (certificate) {
+        if (certificate) {
+          certificateGroup.show();
+          var certificateStr = "<div><b>Власник:</b> " + certificate.subject.commonName + "</div>" +
+            "<div><b>ЦСК:</b> " + certificate.issuer.commonName + "</div>" +
+            "<div><b>Серійний номер:</b> " + certificate.serialNumber + " " + formatDate(new Date(certificate.validFrom)) + "-" + formatDate(new Date(certificate.validTo)) + "</div>" +
+            "<div><b>Організація:</b> " + certificate.subject.organization + "(" + (certificate.subjectAttributes.EDRPOUCode || certificate.subjectAttributes.DRFOCode) + ")</div>";
+          certificateDetails.html(certificateStr);
+        } else {
+          certificateGroup.hide();
+        }
+      };
+
+
+      var onSuccess = function (response) {
+        var certificate = response.data.Certificate;
+        showCertificate(certificate);
+        var signature = response.data.Sign;
+        signatureTextArea.val(signature);
+        signatureGroup.show();
+        console.log(response);
+      };
+
+      var onError = function (response) {
+        signingMessageSpan.text(response.data);
+        console.log(response);
+      };
+
+      UKeyPlugin.init(defaultConfiguration);
+      UKeyPlugin.authenticateModule.authenticateWithSign(data, onSuccess, onError);
+    } else {
+      signingMessageSpan.text("Текст для підпису не може бути пустий");
+    }
+  };
+
+  function formatDate(date) {
+    var day = date.getDate();
+    day = day < 10 ? "0" + day : day;
+    var month = date.getMonth() + 1;
+    month = month < 10 ? "0" + month : month;
+    var year = date.getFullYear();
+    return day + '.' + month + '.' + year;
+  }
+</script>
+</html>

@@ -1,0 +1,76 @@
+<div id="ukeyPluginWindow" class="ukey-plugin-window">
+  <div class="ukey-plugin-window-content">
+    <div class="ukey-plugin-window-header">
+      <div class="ukey-logo"></div>
+      <span class="ukey-font">UKey</span>
+    </div>
+    <div class="ukey-plugin-window-body">
+      <div id="ukeyPluginWindowProcessing" class="ukey-plugin-processing ukey-plugin-font-info">
+        <div class="ukey-plugin-processing-loader">
+          <span></span>
+        </div>
+        <div class="ukey-plugin-processing-message">
+          <span id="pluginProcessingMessage"> </span>
+        </div>
+      </div>
+      <div id="ukeyPluginLoginType" class="ukey-plugin-font-info" align="center">
+        <div style="padding-bottom: 15px; font-size: 16px">
+          <span>Sign in to UKey</span>
+        </div>
+        <div style="display: flex;">
+          <div class="ukey-user-wrapper" onclick="UKeyPlugin.loginTypeScreen.authorizeByLogin()">
+            <div class="ukey-login-item" style="margin: 5px; display: block;">
+              <div class="ukey-logintype-img-login"></div>
+              <div class="ukey-user-info">
+                By login and password
+              </div>
+            </div>
+          </div>
+          <div style="background-color: rgba(255, 255, 255, 0.8); width: 3px; margin: 0px 10px 0px 10px; border-radius: 15px;"></div>
+          <div class="ukey-user-wrapper" onclick="UKeyPlugin.loginTypeScreen.authorizeByMobile()">
+            <div class="ukey-login-item" style="margin: 5px; display: block;">
+              <div class="ukey-logintype-img-mobile"></div>
+              <div class="ukey-user-info">
+                By login and mobile
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="ukeyPluginMobileLogin">
+        <form name="ukeyPluginWindowloginFormScreen"
+              action="javascript: UKeyPlugin.loginTypeScreen.onSubmit()" class="ukey-plugin-login">
+          <i class="ukey-plugin-icon ukey-plugin-mail-icon"></i>
+          <div class="ukey-plugin-login-group">
+            <input id="ukeyPluginWindowLoginUserName" type="text" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label class="ukey-plugin-font">Адреса ел. пошти</label>
+          </div>
+          <button class="ukey-plugin-submit-btn ukey-plugin-font" type="submit">
+            УВІЙТИ
+          </button>
+        </form>
+        <div class="ukey-change-user" style="padding: 0px;">
+          <a href="javascript:UKeyPlugin.loginTypeScreen.onCancel()">Відмінити</a>
+        </div>
+      </div>
+      <div id="ukeyPluginWindowUserInfo" class="ukey-plugin-user ukey-plugin-font-info" hidden="hidden">
+        <div class="ukey-user-wrapper" onclick="UKeyPlugin.userInfoScreen.onChooseUserClick()">
+          <div class="ukey-user-item">
+            <div class="ukey-user-avatar">
+              <img id="ukeyPluginWindowUserImage" alt=" "/>
+            </div>
+            <div class="ukey-user-info">
+              <span id="ukeyPluginWindowUserName" class="user-name"></span>
+              <span id="ukeyPluginWindowUserEmail"></span>
+            </div>
+          </div>
+        </div>
+        <div class="ukey-change-user">
+          <a href="javascript:UKeyPlugin.userInfoScreen.onChangeUserClick()">Увійти іншим користувачем</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
