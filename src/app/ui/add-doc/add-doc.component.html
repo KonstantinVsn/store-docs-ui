@@ -1,5 +1,5 @@
 <div class="center py-3">
-  <file-drop headertext="перетягніть файл для підпису та збереження" (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+  <file-drop headertext="перетягніть файл для підпису та збереження" (onFileDrop)="dropped($event)">
     <span></span>
   </file-drop>
   <div class="upload-table py-3">
@@ -18,7 +18,7 @@
   </div>
   <div>
     <button type="button" class="btn btn-outline-warning m-3" (click)="signFileWithUKey()">підписати</button>
-    <button type="button" class="btn btn-outline-primary m-3" (click)="send()">відправити</button>
+    <button type="button" class="btn btn-outline-primary m-3" (click)="sendFile()">відправити</button>
   </div>
   <div class="my-3" *ngIf="tokenStr">
     {{tokenStr}}

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UKeyService } from '../services/ukey.service';
 
 @Component({
   selector: 'app-doc-list',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DocListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private UKey: UKeyService) { }
 
   ngOnInit() {
+    this.UKey.getFiles().subscribe();
   }
 
 }

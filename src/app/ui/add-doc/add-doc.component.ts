@@ -15,6 +15,7 @@ export class AddDocComponent implements OnInit {
 
   file: File
   token: SuccessResponce
+  signatureId: string
   tokenStr: string = localStorage.getItem('UKeytoken');
   constructor(private UKey: UKeyService) { }
 
@@ -100,17 +101,21 @@ export class AddDocComponent implements OnInit {
     this.UKey.signFile(token.token.access_token, this.file, this.file.name)
     .subscribe(
       data=> {
+        this.signatureId = data;
         debugger
       },)
       error=> {}
   }
 
-  public fileOver(event) {
-    console.log(event);
-  }
-
-  public fileLeave(event) {
-    console.log(event);
+  sendFile(){
+    this.UKey.sendFile(this.file, this.file.name, this.signatureId).subscribe(
+      data => {
+        debugger
+      },
+      error => {
+        debugger
+      }
+    )
   }
 
 }
