@@ -3,19 +3,26 @@ import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular
 import { map, finalize, catchError, delay } from 'rxjs/operators';
 import { AuthRequest } from '../models/authRequest';
 import { AuthResponce } from '../models/authResponce';
-import { throwError } from 'rxjs';
+import { throwError, Subject } from 'rxjs';
 import { SuccessResponce } from '../models/succesResonce';
+import { Block } from '../models/block';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UKeyService {
 
-  constructor(private http: HttpClient) { }
   UKeyEndpoint: string = "https://test.ukey.net.ua:3020"
   StoreDocEndpoint: string = "http://localhost:65289"
+  loading: Subject<boolean>;
+
+  constructor(private http: HttpClient) {
+    this.loading = new Subject<boolean>();
+  }
+
 
   mobileAuth() {
+    this.triggerLoading(true);
     let req = new AuthRequest();
     req.username = "test@ukey.com"
     req.portal.id = "1851da23-e2a8-4a3e-baa9-7cceed979fat"
@@ -28,10 +35,11 @@ export class UKeyService {
           console.log(`"api/auth/request" - ${user}`);
           return user;
         }),
-        finalize(() => { }))
+        finalize(() => { this.triggerLoading(false); }))
   }
 
   checkMobileAuth(id: string) {
+    this.triggerLoading(true);
     return this.http.get<any>(`${this.UKeyEndpoint}/api/auth/request/${id}/check`)
       .pipe(
         map((data) => {
@@ -39,14 +47,34 @@ export class UKeyService {
           return data
         }),
         catchError((err) => throwError(err)),
+        finalize(() => { this.triggerLoading(false); }));
+  }
+
+  checkSignatureId(id: string) {
+    this.triggerLoading(true);
+    return this.http.get<any>(`${this.UKeyEndpoint}/api/v1/requests/file/${id}?mode=full`)
+      .pipe(
+        map((data) => {
+          return data
+        }),
+        catchError((err) => throwError(err)),
         finalize(() => { }));
   }
 
+
+
   signFile(token: string, file: any, fileName: string) {
+    this.triggerLoading(true);
     let _TOKEN = "w5n77v3GRLGq6RJMybpVeaPv6V7sogG3";
     //let _URL = "http://10.10.10.136:3020/api/v1/requests/file";
     var _URL = "https://test.ukey.net.ua:3020/api/v1/requests/file";
     let payload = [];
+
+    payload.push({
+      "name": file.name,
+      "size": file.size
+    });
+
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${_TOKEN}`
@@ -81,9 +109,10 @@ export class UKeyService {
   }
 
   sendFile(file: any, fileName: string, signatureId: string) {
+    this.triggerLoading(true);
     let input = new FormData();
     input.append(fileName, file);
-    input.append('signatureId', "123");
+    input.append('signatureId', signatureId);
     debugger
     return this.http.post<AuthResponce>(`${this.StoreDocEndpoint}/api/files/upload`, input)
       .pipe(
@@ -92,24 +121,21 @@ export class UKeyService {
           console.log(`"api/auth/request" - ${data}`);
           return data;
         }),
-        finalize(() => { }))
+        finalize(() => { this.triggerLoading(false); }))
   }
 
   getFiles() {
-    return this.http.get<any>(`${this.StoreDocEndpoint}/api/files`)
+    this.triggerLoading(true);
+    return this.http.get<Array<Block>>(`${this.StoreDocEndpoint}/api/files`)
       .pipe(
         map((data) => {
           return data
         }),
         catchError((err) => throwError(err)),
-        finalize(() => { }));
+        finalize(() => { this.triggerLoading(false); }));
   }
 
-  checkStatus(data: any) {
-    debugger
-    if (data.token) {
-      return true;
-    }
-    return false;
+  triggerLoading(status: boolean) {
+    this.loading.next(status)
   }
 }

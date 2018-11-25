@@ -5,6 +5,7 @@ import { UKeyService } from '../services/ukey.service';
 import { Observable, interval, Subject, timer } from 'rxjs';
 import { flatMap, takeWhile, switchMap, map, startWith } from 'rxjs/operators';
 import { SuccessResponce } from '../models/succesResonce';
+import { AlertService } from '../services/alert.service';
 
 @Component({
   selector: 'app-add-doc',
@@ -17,7 +18,13 @@ export class AddDocComponent implements OnInit {
   token: SuccessResponce
   signatureId: string
   tokenStr: string = localStorage.getItem('UKeytoken');
-  constructor(private UKey: UKeyService) { }
+  flow: any = {
+    isFileAdded: false,
+    isFileSigned: false,
+    isFileSent: false
+  }
+
+  constructor(private UKey: UKeyService, private alert: AlertService) { }
 
   ngOnInit() {
     this.timer$ = this.reset$.pipe(
@@ -42,22 +49,10 @@ export class AddDocComponent implements OnInit {
           // Here you can access the real file
           console.log(droppedFile.relativePath, file);
           this.file = file
-          /**
-          // You could upload it like this:
-          const formData = new FormData()
-          formData.append('logo', file, relativePath)
-
-          // Headers
-          const headers = new HttpHeaders({
-            'security-token': 'mytoken'
-          })
-
-          this.http.post('https://mybackend.com/api/upload/sanitize-and-save-logo', formData, { headers: headers, responseType: 'blob' })
-          .subscribe(data => {
-            // Sanitized logo returned from backend
-          })
-          **/
-
+          this.alert.success(`Файл файл завантажено`);
+          this.flow.isFileAdded = true;
+          this.flow.isFileSigned = false
+          this.flow.isFileSent = false
         });
       } else {
         // It was a directory (empty directories are added, otherwise only files)
@@ -66,9 +61,6 @@ export class AddDocComponent implements OnInit {
       }
     }
   }
-
-
-
 
   signWithUKey() {
     let id;
@@ -95,21 +87,38 @@ export class AddDocComponent implements OnInit {
     );
   }
 
-  signFileWithUKey(){
+  signFileWithUKey() {
     debugger
     let token = JSON.parse(localStorage.getItem("UKeytoken"))
     this.UKey.signFile(token.token.access_token, this.file, this.file.name)
-    .subscribe(
-      data=> {
-        this.signatureId = data;
-        debugger
-      },)
-      error=> {}
+      .subscribe(
+        data => {
+          debugger
+          interval(2000)
+            .pipe(
+              flatMap(() => this.UKey.checkSignatureId(data.requestId)),
+              takeWhile(data => {
+                if(data.status == "PENDING"){
+                  return true;
+                }
+                if(data.status == "SIGNED"){
+                  this.signatureId = data.resultId;
+                  this.flow.isFileSigned = true
+                  this.UKey.triggerLoading(false);
+                  this.alert.success(`Файл підписано`);
+                  return false;
+                }
+              }))
+            .subscribe(result => console.log(result));
+        })
+    error => { }
   }
 
-  sendFile(){
+  sendFile() {
     this.UKey.sendFile(this.file, this.file.name, this.signatureId).subscribe(
       data => {
+        this.flow.isFileSent = true
+        this.alert.success(`Файл відправлено`);
         debugger
       },
       error => {
@@ -119,18 +128,3 @@ export class AddDocComponent implements OnInit {
   }
 
 }
-        // let res = this.timer$
-        // .pipe((x) => {
-        //   let r = this.UKey.checkMobileAuth(data.id).subscribe();
-        //   debugger
-        //   return x
-        // })
-        // .subscribe((data) => {
-
-        // })
-
-        // const result = interval(100).pipe(
-        //   switchMap(() => this.UKey.checkMobileAuth(data.id)),    
-        //   map(res => console.log(result))
-        //   )
-        // debugger

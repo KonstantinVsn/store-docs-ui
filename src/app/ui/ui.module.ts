@@ -6,6 +6,9 @@ import { FooterComponent } from './footer/footer.component';
 import { DocListComponent } from './doc-list/doc-list.component';
 import { AddDocComponent } from './add-doc/add-doc.component';
 import { FileDropModule } from 'ngx-file-drop';
+import { AlertService } from './services/alert.service';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -17,8 +20,12 @@ import { FileDropModule } from 'ngx-file-drop';
   ],
   imports: [
     CommonModule,
-    FileDropModule
+    FileDropModule,
+    ToastrModule.forRoot(),
+    CommonModule,
+    BrowserAnimationsModule
   ],
-  exports: [LayoutComponent]
+  exports: [LayoutComponent],
+  providers:[]
 })
 export class UiModule { }

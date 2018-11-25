@@ -28,6 +28,7 @@
             ],
             "styles": [
               "src/styles.scss",
+              "node_modules/ngx-toastr/toastr.css",
               "src/assets/ukey-plugin/css/ukey-plugin-font.css",
               "src/assets/ukey-plugin/css/ukey-plugin-loader.css",
               "src/assets/ukey-plugin/css/ukey-plugin-window.css"

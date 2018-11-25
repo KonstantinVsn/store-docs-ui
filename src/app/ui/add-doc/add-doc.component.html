@@ -1,3 +1,32 @@
+<!-- https://codepen.io/sharafat_8271/pen/KVWMXP -->
+<div class="mdl-card mdl-shadow--2dp">
+
+  <div class="mdl-card__supporting-text">
+
+    <div class="mdl-stepper-horizontal-alternative">
+      <div class="mdl-stepper-step step-done" [ngClass]="{'active-step' : flow.isFileAdded}">
+        <div class="mdl-stepper-circle"><span>1</span></div>
+        <div class="mdl-stepper-title">Добавить </div>
+        <div class="mdl-stepper-bar-left"></div>
+        <div class="mdl-stepper-bar-right"></div>
+      </div>
+      <div class="mdl-stepper-step editable-step" [ngClass]="{'active-step' : flow.isFileSigned}">
+        <div class="mdl-stepper-circle"><span>2</span></div>
+        <div class="mdl-stepper-title">Подписать </div>
+        <div class="mdl-stepper-bar-left"></div>
+        <div class="mdl-stepper-bar-right"></div>
+      </div>
+      <div class="mdl-stepper-step sent-step" [ngClass]="{'active-step' : flow.isFileSent}">
+        <div class="mdl-stepper-circle"><span></span></div>
+        <div class="mdl-stepper-title">Отправить</div>
+        <div class="mdl-stepper-bar-left"></div>
+        <div class="mdl-stepper-bar-right"></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
 <div class="center py-3">
   <file-drop headertext="перетягніть файл для підпису та збереження" (onFileDrop)="dropped($event)">
     <span></span>
@@ -20,7 +49,7 @@
     <button type="button" class="btn btn-outline-warning m-3" (click)="signFileWithUKey()">підписати</button>
     <button type="button" class="btn btn-outline-primary m-3" (click)="sendFile()">відправити</button>
   </div>
-  <div class="my-3" *ngIf="tokenStr">
+  <!-- <div class="my-3" *ngIf="tokenStr">
     {{tokenStr}}
-  </div>
+  </div> -->
 </div>

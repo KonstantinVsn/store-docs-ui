@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UKeyService } from '../services/ukey.service';
 
 @Component({
   selector: 'app-layout',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
 
-  constructor() { }
+  loading: boolean
+
+  constructor(private UKey: UKeyService) { 
+    UKey.loading.subscribe(data => this.loading = data);
+  }
 
   ngOnInit() {
+     
   }
 
 }

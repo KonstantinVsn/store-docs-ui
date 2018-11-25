@@ -9,6 +9,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { FormsModule } from '@angular/forms';
 import { AddDocComponent } from "./ui/add-doc/add-doc.component";
 import { DocListComponent } from "./ui/doc-list/doc-list.component";
+import { AlertService } from "./ui/services/alert.service";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { DocListComponent } from "./ui/doc-list/doc-list.component";
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [AlertService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
