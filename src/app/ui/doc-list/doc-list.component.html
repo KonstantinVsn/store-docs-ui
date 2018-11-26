@@ -1,7 +1,10 @@
+<div>
+  <button type="button" class="btn btn-outline-primary m-3" (click)="reload()">оновити</button>
+</div>
 <div *ngIf="blocks">
   <div class="row pt-3" *ngFor="let block of blocks">
-    <div class="col"><i class="fa fa-file-o mx-1" aria-hidden="true"></i>{{block.fileName}}</div>
-    <div class="col"><i class="fa fa-lock mx-1" aria-hidden="true"></i>{{block.signatureName}}</div>
+    <div class="col ellipsis"><i class="fa fa-file-o mx-1" aria-hidden="true"></i>{{block.fileName}}</div>
+    <div class="col ellipsis"><i class="fa fa-lock mx-1" aria-hidden="true"></i>{{block.signatureName}}</div>
     <hr class="divider"/>
   </div>
 </div>

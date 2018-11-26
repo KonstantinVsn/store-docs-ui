@@ -25,6 +25,7 @@ export class UKeyService {
     this.triggerLoading(true);
     let req = new AuthRequest();
     req.username = "test@ukey.com"
+    //req.username = "konstantinvasin747@ukey.com"
     req.portal.id = "1851da23-e2a8-4a3e-baa9-7cceed979fat"
     req.portal.key = "548618421630d8204fbb73b9b506d3cb4dc9810a16249d14c83fa5209f47e3ccc00590d7f20cc535ba6490057405ccb4"
 

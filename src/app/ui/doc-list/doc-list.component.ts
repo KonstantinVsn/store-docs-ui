@@ -14,6 +14,11 @@ export class DocListComponent implements OnInit {
   constructor(private UKey: UKeyService) { }
 
   ngOnInit() {
+    this.reload();
+  }
+
+
+  reload(){
     this.UKey.getFiles().subscribe(data => this.blocks = data);
   }
 

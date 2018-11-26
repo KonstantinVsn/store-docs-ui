@@ -14,3 +14,9 @@ i.fa {
     overflow: hidden;
     background-color: #e5e5e5;
   }
+
+  .ellipsis{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
