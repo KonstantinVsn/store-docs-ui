@@ -1,0 +1,27 @@
+<div class="bg-color">
+  <!-- Loader -->
+<div class="blobs" *ngIf="loading">
+    <div class="blob-center"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+  </div>
+  <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <defs>
+      <filter id="goo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+        <feBlend in="SourceGraphic" in2="goo" />
+      </filter>
+    </defs>
+  </svg>
+  <div class="form-group login">
+    <label for="exampleInputEmail1">Авторизація</label>
+    <input [(ngModel)]="email" name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Введіть email">
+    <small id="emailHelp" class="form-text text-muted">введіть логін від Ukey</small>
+    <button type="submit" class="btn btn-primary mt-2" (click)="auth()">увійти</button>
+  </div>
+</div>

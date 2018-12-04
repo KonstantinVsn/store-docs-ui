@@ -10,10 +10,14 @@ import { FormsModule } from '@angular/forms';
 import { AddDocComponent } from "./ui/add-doc/add-doc.component";
 import { DocListComponent } from "./ui/doc-list/doc-list.component";
 import { AlertService } from "./ui/services/alert.service";
+import { AuthComponent } from './auth/auth/auth.component';
+import { NodesComponent } from './nodes/nodes.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AuthComponent,
+    NodesComponent
   ],
   imports: [
     BrowserModule,

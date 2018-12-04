@@ -21,10 +21,10 @@ export class UKeyService {
   }
 
 
-  mobileAuth() {
+  mobileAuth(email?: string) {
     this.triggerLoading(true);
     let req = new AuthRequest();
-    req.username = "test@ukey.com"
+    req.username = email ? email : "test@ukey.com"
     //req.username = "konstantinvasin747@ukey.com"
     req.portal.id = "1851da23-e2a8-4a3e-baa9-7cceed979fat"
     req.portal.key = "548618421630d8204fbb73b9b506d3cb4dc9810a16249d14c83fa5209f47e3ccc00590d7f20cc535ba6490057405ccb4"
@@ -138,5 +138,29 @@ export class UKeyService {
 
   triggerLoading(status: boolean) {
     this.loading.next(status)
+  }
+
+  loadFile(url:string){
+    debugger
+    let _TOKEN = "w5n77v3GRLGq6RJMybpVeaPv6V7sogG3";
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${_TOKEN}`
+      }),
+      responseType: "blob"
+    };
+    return this.http.get(`${this.UKeyEndpoint}${url}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${_TOKEN}`
+      }),
+      responseType: "blob"
+    })
+    .pipe(
+      map(data => {
+
+        return data;
+      }),
+      finalize(() => { }))
   }
 }

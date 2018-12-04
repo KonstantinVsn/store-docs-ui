@@ -49,7 +49,7 @@ export class AddDocComponent implements OnInit {
           // Here you can access the real file
           console.log(droppedFile.relativePath, file);
           this.file = file
-          this.alert.success(`Файл файл завантажено`);
+          this.alert.success(`Файл завантажено`);
           this.flow.isFileAdded = true;
           this.flow.isFileSigned = false
           this.flow.isFileSent = false
